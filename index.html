@@ -641,6 +641,83 @@ tr:hover td { background: var(--bg-2); }
 
 .sources-group a:hover { color: var(--cyan); }
 
+/* ICP CARDS */
+.icp-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.icp-card {
+  background: var(--bg-1);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.icp-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+}
+
+.icp-card.icp-primary::before { background: var(--cyan); }
+.icp-card.icp-secondary::before { background: var(--green); }
+.icp-card.icp-third::before { background: var(--amber); }
+.icp-card.icp-fourth::before { background: var(--purple); }
+
+.icp-rank {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+}
+
+.icp-card.icp-primary .icp-rank { color: var(--cyan); }
+.icp-card.icp-secondary .icp-rank { color: var(--green); }
+.icp-card.icp-third .icp-rank { color: var(--amber); }
+.icp-card.icp-fourth .icp-rank { color: var(--purple); }
+
+.icp-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-0);
+  margin-bottom: 12px;
+  line-height: 1.3;
+}
+
+.icp-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 12px;
+}
+
+.icp-row:last-child { border-bottom: none; }
+
+.icp-key {
+  color: var(--text-3);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+  width: 90px;
+}
+
+.icp-val {
+  color: var(--text-1);
+  text-align: right;
+  flex: 1;
+}
+
 /* SEPARATOR */
 .sep {
   height: 1px;
@@ -1078,6 +1155,59 @@ tr:hover td { background: var(--bg-2); }
       </div>
     </div>
   </div>
+
+  <h2 style="margin-top:48px;">Ideal Customer Profiles</h2>
+
+  <div class="icp-grid">
+    <div class="icp-card icp-primary">
+      <div class="icp-rank">Primary ICP</div>
+      <div class="icp-title">Independent Concussion / Vestibular Clinician</div>
+      <div class="icp-row"><div class="icp-key">Role</div><div class="icp-val">Physiotherapist, Chiropractor, Functional Neurologist, Osteopath</div></div>
+      <div class="icp-row"><div class="icp-key">Geo</div><div class="icp-val">Canada &amp; US</div></div>
+      <div class="icp-row"><div class="icp-key">Practice</div><div class="icp-val">Solo or small clinic, concussion/vestibular specialty</div></div>
+      <div class="icp-row"><div class="icp-key">Pain</div><div class="icp-val">Assigns home exercises via printouts/videos, no standardized tracking</div></div>
+      <div class="icp-row"><div class="icp-key">Behavior</div><div class="icp-val">Recommends app to patients, uses assessment modules in-clinic</div></div>
+      <div class="icp-row"><div class="icp-key">Channel</div><div class="icp-val">Carrick Institute, CE courses, functional neuro KOL network</div></div>
+      <div class="icp-row"><div class="icp-key">Evidence</div><div class="icp-val">5/6 website testimonials, 3/8 app reviews are clinicians <span class="tag tag-v">V</span></div></div>
+    </div>
+
+    <div class="icp-card icp-secondary">
+      <div class="icp-rank">Secondary ICP</div>
+      <div class="icp-title">Concussion / Vestibular Patient</div>
+      <div class="icp-row"><div class="icp-key">Who</div><div class="icp-val">mTBI patient with persistent oculomotor or vestibular symptoms</div></div>
+      <div class="icp-row"><div class="icp-key">Geo</div><div class="icp-val">US, Canada, 30+ international markets</div></div>
+      <div class="icp-row"><div class="icp-key">Stage</div><div class="icp-val">Post-acute, in active rehab with a clinician</div></div>
+      <div class="icp-row"><div class="icp-key">Pain</div><div class="icp-val">Needs structured exercises between clinic visits, affordable tools</div></div>
+      <div class="icp-row"><div class="icp-key">Behavior</div><div class="icp-val">Buys app on clinician recommendation ($15-18), does exercises at home</div></div>
+      <div class="icp-row"><div class="icp-key">Channel</div><div class="icp-val">Clinician referral (primary), App Store discovery, free mini course</div></div>
+      <div class="icp-row"><div class="icp-key">Evidence</div><div class="icp-val">App Store reviews, testimonials, B2B2C model <span class="tag tag-v">V</span></div></div>
+    </div>
+
+    <div class="icp-card icp-third">
+      <div class="icp-rank">Third ICP</div>
+      <div class="icp-title">Sports Organization / School Athletic Program</div>
+      <div class="icp-row"><div class="icp-key">Who</div><div class="icp-val">Athletic directors, team medical staff, sports performance coaches</div></div>
+      <div class="icp-row"><div class="icp-key">Geo</div><div class="icp-val">US &amp; Canada (NCAA, CIS, youth leagues)</div></div>
+      <div class="icp-row"><div class="icp-key">Use case</div><div class="icp-val">Baseline athletes, support return-to-play, monitor neuroperformance</div></div>
+      <div class="icp-row"><div class="icp-key">Pain</div><div class="icp-val">No integrated tool for pre-season baseline + post-injury tracking</div></div>
+      <div class="icp-row"><div class="icp-key">Behavior</div><div class="icp-val">Team-level licensing, sport-themed exercises (hockey puck, soccer ball)</div></div>
+      <div class="icp-row"><div class="icp-key">Channel</div><div class="icp-val">Conferences, sports medicine networks, athlete testimonials</div></div>
+      <div class="icp-row"><div class="icp-key">Evidence</div><div class="icp-val">1 athlete testimonial, sport targets added. No partnerships yet <span class="tag tag-a">A</span></div></div>
+    </div>
+
+    <div class="icp-card icp-fourth">
+      <div class="icp-rank">Fourth ICP</div>
+      <div class="icp-title">Research Institution / Clinical Trial Partner</div>
+      <div class="icp-row"><div class="icp-key">Who</div><div class="icp-val">University labs, rehab researchers, clinical investigators</div></div>
+      <div class="icp-row"><div class="icp-key">Geo</div><div class="icp-val">Global</div></div>
+      <div class="icp-row"><div class="icp-key">Use case</div><div class="icp-val">Standardized intervention tool for studies, outcome metric recording</div></div>
+      <div class="icp-row"><div class="icp-key">Pain</div><div class="icp-val">Need reproducible, parameterized exercise delivery for RCTs</div></div>
+      <div class="icp-row"><div class="icp-key">Behavior</div><div class="icp-val">License app as intervention arm, use data export for analysis</div></div>
+      <div class="icp-row"><div class="icp-key">Channel</div><div class="icp-val">ACRM conferences, PubMed publications, academic networks</div></div>
+      <div class="icp-row"><div class="icp-key">Evidence</div><div class="icp-val">Founder's own RCT uses BTK. No external research partnerships found <span class="tag tag-a">A</span></div></div>
+    </div>
+  </div>
+
 </section>
 
 <!-- ============ 6. DISTRIBUTION ============ -->
