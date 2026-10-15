@@ -1,0 +1,1754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brain Tool Kit — Product Research Brief</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-0: #06080d;
+  --bg-1: #0c0f18;
+  --bg-2: #131827;
+  --bg-3: #1a2038;
+  --border: #1e2642;
+  --border-light: #2a3456;
+  --text-0: #f0f2f8;
+  --text-1: #c0c8dc;
+  --text-2: #7a84a0;
+  --text-3: #4a5270;
+  --cyan: #00d4ff;
+  --cyan-dim: #00d4ff33;
+  --green: #00e68a;
+  --green-dim: #00e68a22;
+  --amber: #ffb020;
+  --amber-dim: #ffb02022;
+  --red: #ff4466;
+  --red-dim: #ff446622;
+  --purple: #a78bfa;
+  --purple-dim: #a78bfa22;
+  --blue: #3b82f6;
+  --pink: #f472b6;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', -apple-system, sans-serif;
+  background: var(--bg-0);
+  color: var(--text-1);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* NAV */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: var(--bg-0);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+  background: rgba(6,8,13,0.92);
+}
+
+.nav-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  height: 56px;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.nav-inner::-webkit-scrollbar { display: none; }
+
+.nav-brand {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--cyan);
+  white-space: nowrap;
+  margin-right: 16px;
+  letter-spacing: -0.02em;
+}
+
+.nav-link {
+  font-size: 12px;
+  color: var(--text-2);
+  text-decoration: none;
+  white-space: nowrap;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: all 0.2s;
+  font-weight: 500;
+}
+
+.nav-link:hover { color: var(--text-0); background: var(--bg-2); }
+
+/* LAYOUT */
+main {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 80px 24px 64px;
+}
+
+section {
+  margin-bottom: 80px;
+}
+
+.section-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--cyan);
+  margin-bottom: 8px;
+}
+
+h1 {
+  font-size: clamp(32px, 5vw, 56px);
+  font-weight: 800;
+  color: var(--text-0);
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin-bottom: 16px;
+}
+
+h2 {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-0);
+  letter-spacing: -0.02em;
+  margin-bottom: 24px;
+}
+
+h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-0);
+  margin-bottom: 12px;
+}
+
+.subtitle {
+  font-size: 16px;
+  color: var(--text-2);
+  max-width: 640px;
+  margin-bottom: 40px;
+}
+
+/* STAT GRID */
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.stat-card {
+  background: var(--bg-1);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.stat-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text-0);
+  line-height: 1.1;
+  margin-bottom: 4px;
+}
+
+.stat-value.cyan { color: var(--cyan); }
+.stat-value.green { color: var(--green); }
+.stat-value.amber { color: var(--amber); }
+.stat-value.red { color: var(--red); }
+.stat-value.purple { color: var(--purple); }
+
+.stat-label {
+  font-size: 12px;
+  color: var(--text-2);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* CARDS */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.card {
+  background: var(--bg-1);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.card-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.card-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-0);
+}
+
+.card-body {
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.6;
+}
+
+/* TAGS */
+.tag {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 3px 8px;
+  border-radius: 4px;
+  margin-right: 4px;
+}
+
+.tag-v { background: var(--green-dim); color: var(--green); }
+.tag-i { background: var(--amber-dim); color: var(--amber); }
+.tag-a { background: var(--red-dim); color: var(--red); }
+.tag-nf { background: var(--bg-3); color: var(--text-3); }
+
+/* HORIZONTAL BARS */
+.bar-chart { margin: 16px 0; }
+
+.bar-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  gap: 12px;
+}
+
+.bar-label {
+  font-size: 12px;
+  color: var(--text-1);
+  width: 180px;
+  flex-shrink: 0;
+  text-align: right;
+}
+
+.bar-track {
+  flex: 1;
+  height: 24px;
+  background: var(--bg-2);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 1s ease;
+  position: relative;
+}
+
+.bar-fill.cyan { background: linear-gradient(90deg, var(--cyan), #00a0cc); }
+.bar-fill.green { background: linear-gradient(90deg, var(--green), #00b36b); }
+.bar-fill.amber { background: linear-gradient(90deg, var(--amber), #cc8800); }
+.bar-fill.red { background: linear-gradient(90deg, var(--red), #cc2244); }
+.bar-fill.purple { background: linear-gradient(90deg, var(--purple), #7c5cd4); }
+
+.bar-val {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--text-2);
+  width: 50px;
+  flex-shrink: 0;
+}
+
+/* TABLES */
+.table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-1);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+th {
+  text-align: left;
+  padding: 12px 16px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-2);
+  background: var(--bg-2);
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-1);
+  vertical-align: top;
+}
+
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(--bg-2); }
+
+/* POSITIONING MAP */
+.pos-map {
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+  aspect-ratio: 1;
+  margin: 24px auto;
+  background: var(--bg-1);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.pos-axis-x, .pos-axis-y {
+  position: absolute;
+  background: var(--border);
+}
+
+.pos-axis-x { left: 10%; right: 10%; top: 50%; height: 1px; }
+.pos-axis-y { top: 10%; bottom: 10%; left: 50%; width: 1px; }
+
+.pos-label {
+  position: absolute;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-3);
+}
+
+.pos-dot {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: default;
+}
+
+.pos-dot-circle {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid;
+  flex-shrink: 0;
+}
+
+.pos-dot-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-1);
+  white-space: nowrap;
+}
+
+/* RADAR */
+.radar-wrap {
+  display: flex;
+  justify-content: center;
+  margin: 24px 0;
+}
+
+/* TIMELINE */
+.timeline {
+  position: relative;
+  padding-left: 32px;
+  margin: 24px 0;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 11px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--border);
+}
+
+.tl-item {
+  position: relative;
+  margin-bottom: 20px;
+  padding-bottom: 4px;
+}
+
+.tl-dot {
+  position: absolute;
+  left: -27px;
+  top: 4px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--cyan);
+  border: 2px solid var(--bg-0);
+}
+
+.tl-year {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--cyan);
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.tl-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-0);
+  margin-bottom: 2px;
+}
+
+.tl-desc {
+  font-size: 12px;
+  color: var(--text-2);
+}
+
+/* HYPOTHESIS CARDS */
+.hyp-card {
+  background: var(--bg-1);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 12px;
+}
+
+.hyp-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.hyp-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--cyan);
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.hyp-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-0);
+  flex: 1;
+}
+
+.evidence-row {
+  display: flex;
+  gap: 16px;
+  font-size: 12px;
+  margin-top: 8px;
+}
+
+.ev-for, .ev-against {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.ev-for { background: var(--green-dim); }
+.ev-against { background: var(--red-dim); }
+
+.ev-label {
+  font-weight: 600;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 4px;
+}
+
+.ev-for .ev-label { color: var(--green); }
+.ev-against .ev-label { color: var(--red); }
+
+.ev-text { color: var(--text-2); line-height: 1.5; }
+
+/* FEATURE MATRIX */
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 8px;
+  margin: 16px 0;
+}
+
+.feature-cell {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-1);
+  transition: all 0.2s;
+}
+
+.feature-cell:hover {
+  border-color: var(--cyan);
+  background: var(--bg-3);
+}
+
+.feature-cell .fc-icon {
+  font-size: 20px;
+  margin-bottom: 6px;
+}
+
+.feature-cell .fc-name {
+  font-weight: 600;
+  color: var(--text-0);
+  font-size: 11px;
+  margin-bottom: 2px;
+}
+
+.feature-cell .fc-cat {
+  font-size: 10px;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* CONCENTRIC CIRCLES (TAM/SAM/SOM) */
+.tam-viz {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 32px 0;
+}
+
+/* QUESTION CARDS */
+.q-card {
+  background: var(--bg-1);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 8px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.q-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--purple);
+  flex-shrink: 0;
+  width: 24px;
+}
+
+.q-text {
+  font-size: 13px;
+  color: var(--text-1);
+  flex: 1;
+}
+
+.q-tag {
+  font-size: 10px;
+  color: var(--text-3);
+  margin-top: 4px;
+}
+
+/* SUMMARY */
+.summary-col {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+.summary-block {
+  padding: 24px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+.summary-block.established { background: var(--green-dim); border-color: #00e68a44; }
+.summary-block.uncertain { background: var(--amber-dim); border-color: #ffb02044; }
+.summary-block.unknown { background: var(--red-dim); border-color: #ff446644; }
+
+.summary-block h3 { margin-bottom: 8px; }
+.summary-block.established h3 { color: var(--green); }
+.summary-block.uncertain h3 { color: var(--amber); }
+.summary-block.unknown h3 { color: var(--red); }
+
+/* SOURCES */
+.sources-grid {
+  columns: 2;
+  column-gap: 24px;
+}
+
+.sources-group {
+  break-inside: avoid;
+  margin-bottom: 20px;
+}
+
+.sources-group h4 {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-0);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.sources-group a {
+  display: block;
+  font-size: 12px;
+  color: var(--text-2);
+  text-decoration: none;
+  padding: 3px 0;
+  transition: color 0.2s;
+}
+
+.sources-group a:hover { color: var(--cyan); }
+
+/* SEPARATOR */
+.sep {
+  height: 1px;
+  background: var(--border);
+  margin: 48px 0;
+}
+
+/* STAKEHOLDER MAP */
+.stake-flow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin: 24px 0;
+  flex-wrap: wrap;
+}
+
+.stake-node {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 20px;
+  text-align: center;
+  min-width: 140px;
+}
+
+.stake-node.primary { border-color: var(--cyan); background: var(--cyan-dim); }
+
+.stake-arrow {
+  font-size: 20px;
+  color: var(--text-3);
+  padding: 0 8px;
+}
+
+.stake-role {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-3);
+  margin-bottom: 4px;
+}
+
+.stake-who {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-0);
+}
+
+/* CONFIDENCE LEGEND */
+.legend {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+  padding: 12px 16px;
+  background: var(--bg-1);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-2);
+}
+
+/* TWO-COL */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .nav-inner { padding: 0 16px; }
+  main { padding: 72px 16px 40px; }
+  .stat-row { grid-template-columns: repeat(2, 1fr); }
+  .bar-label { width: 120px; font-size: 11px; }
+  .two-col { grid-template-columns: 1fr; }
+  .sources-grid { columns: 1; }
+  .evidence-row { flex-direction: column; }
+  .stake-flow { flex-direction: column; }
+  .stake-arrow { transform: rotate(90deg); }
+  .pos-map { aspect-ratio: auto; height: 400px; }
+}
+
+@media (max-width: 480px) {
+  .stat-row { grid-template-columns: 1fr; }
+  .stat-value { font-size: 24px; }
+  h2 { font-size: 22px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <span class="nav-brand">BTK BRIEF</span>
+    <a href="#snapshot" class="nav-link">Snapshot</a>
+    <a href="#problem" class="nav-link">Problem</a>
+    <a href="#product" class="nav-link">Product</a>
+    <a href="#value" class="nav-link">Value Prop</a>
+    <a href="#users" class="nav-link">Users</a>
+    <a href="#distribution" class="nav-link">Distribution</a>
+    <a href="#competition" class="nav-link">Competition</a>
+    <a href="#market" class="nav-link">Market</a>
+    <a href="#regulatory" class="nav-link">Regulatory</a>
+    <a href="#hypotheses" class="nav-link">Hypotheses</a>
+    <a href="#questions" class="nav-link">Questions</a>
+    <a href="#summary" class="nav-link">Summary</a>
+  </div>
+</nav>
+
+<main>
+
+<!-- ============ HERO ============ -->
+<section id="hero">
+  <div class="section-label">YSpace JumpSTART Research Brief</div>
+  <h1>Brain Tool Kit</h1>
+  <p class="subtitle">Concussion and vestibular rehab app by Rehab Lab Inc. Broadest exercise set in the category. Solo clinical founder, bootstrapped, 3K+ units sold.</p>
+
+  <div class="legend">
+    <div class="legend-item"><span class="tag tag-v">V</span> Verified, cited</div>
+    <div class="legend-item"><span class="tag tag-i">I</span> Inferred, evidence stated</div>
+    <div class="legend-item"><span class="tag tag-a">A</span> Assumed</div>
+    <div class="legend-item"><span class="tag tag-nf">NF</span> Not found</div>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-card">
+      <div class="stat-value cyan">3,000+</div>
+      <div class="stat-label">Units sold across 30+ countries</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value green">$17.99</div>
+      <div class="stat-label">One-time price (US) + $4.99/mo Pro</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value amber">6</div>
+      <div class="stat-label">iOS ratings (4.3 stars)</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value purple">2020</div>
+      <div class="stat-label">Launch year (iOS v1.1)</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">1</div>
+      <div class="stat-label">FTE (solo founder + contract devs)</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">$0</div>
+      <div class="stat-label">External funding raised</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 1. SNAPSHOT ============ -->
+<section id="snapshot">
+  <div class="section-label">01 / Company Snapshot</div>
+  <h2>Rehab Lab Inc.</h2>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--cyan-dim);">
+          <span style="color:var(--cyan);">&#9879;</span>
+        </div>
+        <div class="card-title">Founder</div>
+      </div>
+      <div class="card-body">
+        <strong style="color:var(--text-0);">Melissa Biscardi</strong>, RN, DOMP, PhD<br>
+        Visual-vestibular rehabilitation, U of T Temerty Faculty of Medicine.<br>
+        <span style="font-size:11px; color:var(--text-3);">Title discrepancy: "Founder, CEO" (deck) vs "Chief Innovation Officer" (website)</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--green-dim);">
+          <span style="color:var(--green);">&#9878;</span>
+        </div>
+        <div class="card-title">Research Credentials</div>
+      </div>
+      <div class="card-body">
+        <strong style="color:var(--text-0);">4 peer-reviewed publications</strong> (PubMed)<br>
+        Systematic review + meta-analysis (Brain Injury, 2024)<br>
+        RCT conducted (ORCA, NCT07709936) &mdash; results unpublished<br>
+        ACRM 2025 &amp; 2026 poster presentations
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--purple-dim);">
+          <span style="color:var(--purple);">&#9881;</span>
+        </div>
+        <div class="card-title">Related Businesses</div>
+      </div>
+      <div class="card-body">
+        <strong style="color:var(--text-0);">Concussion Rehab clinic</strong> (Toronto, 600 Sherbourne)<br>
+        <strong style="color:var(--text-0);">REACH CE courses</strong> (via Kajabi + Carrick Institute)<br>
+        Team: founder + "KC" (iOS) + "MS" (Android)
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--amber-dim);">
+          <span style="color:var(--amber);">&#9888;</span>
+        </div>
+        <div class="card-title">Flags</div>
+      </div>
+      <div class="card-body">
+        No external funding, no Crunchbase profile<br>
+        No IRAP, OCI, or Mitacs grants for company<br>
+        Not listed in public YSpace cohort announcements<br>
+        Some pages still list "PhD(c)" <span class="tag tag-v">V</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 2. PROBLEM ============ -->
+<section id="problem">
+  <div class="section-label">02 / Problem</div>
+  <h2>Concussion Rehab Is Analog and Fragmented</h2>
+
+  <div class="stat-row">
+    <div class="stat-card">
+      <div class="stat-value cyan">1.9M</div>
+      <div class="stat-label">Mild TBI ED visits/yr (US) <span class="tag tag-v">V</span></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value cyan">400K</div>
+      <div class="stat-label">Concussions/yr (Canada) <span class="tag tag-v">V</span></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value amber">69M</div>
+      <div class="stat-label">US adults 40+ with vestibular dysfunction <span class="tag tag-v">V</span></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value red">21.9%</div>
+      <div class="stat-label">Canadians with concussion who didn't seek care in 48h <span class="tag tag-v">V</span></div>
+    </div>
+  </div>
+
+  <div class="card" style="max-width:800px;">
+    <h3>The Gap</h3>
+    <div class="card-body">
+      Concussion patients develop persistent oculomotor and vestibular symptoms requiring rehab beyond rest. Standard care uses low-tech methods (pen-and-paper, video demos) with no standardized way to assign, track, or adjust homework between visits. The founder frames this as "fragmented neuroperformance": intake tools lack training, vision therapy is disconnected from rehab, vestibular rehab has no app-based training, and consumer cognitive apps aren't clinically validated.
+    </div>
+  </div>
+</section>
+
+<!-- ============ 3. PRODUCT ============ -->
+<section id="product">
+  <div class="section-label">03 / Product</div>
+  <h2>Feature Inventory</h2>
+
+  <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-bottom: 32px;">
+    <div class="card" style="border-left: 3px solid var(--cyan);">
+      <h3 style="color:var(--cyan);">Oculomotor</h3>
+      <div class="feature-grid" style="grid-template-columns: repeat(2, 1fr);">
+        <div class="feature-cell"><div class="fc-name">Gaze Stability</div></div>
+        <div class="feature-cell"><div class="fc-name">Saccades</div></div>
+        <div class="feature-cell"><div class="fc-name">Anti-Saccades</div></div>
+        <div class="feature-cell"><div class="fc-name">Smooth Pursuits</div></div>
+        <div class="feature-cell"><div class="fc-name">OPK</div></div>
+        <div class="feature-cell"><div class="fc-name">HemiStim</div></div>
+        <div class="feature-cell"><div class="fc-name">Metronome</div></div>
+        <div class="feature-cell"><div class="fc-name">Combinations</div></div>
+      </div>
+    </div>
+
+    <div class="card" style="border-left: 3px solid var(--green);">
+      <h3 style="color:var(--green);">Cognitive</h3>
+      <div class="feature-grid" style="grid-template-columns: repeat(2, 1fr);">
+        <div class="feature-cell"><div class="fc-name">Stroop</div></div>
+        <div class="feature-cell"><div class="fc-name">Random Letters</div></div>
+        <div class="feature-cell"><div class="fc-name">Memory/Recall</div></div>
+        <div class="feature-cell"><div class="fc-name">Brainy Trail</div></div>
+        <div class="feature-cell"><div class="fc-name">Colour Saturation</div></div>
+        <div class="feature-cell"><div class="fc-name">Random Shapes</div></div>
+      </div>
+    </div>
+
+    <div class="card" style="border-left: 3px solid var(--purple);">
+      <h3 style="color:var(--purple);">Vestibular</h3>
+      <div class="feature-grid" style="grid-template-columns: repeat(2, 1fr);">
+        <div class="feature-cell"><div class="fc-name">SVV</div><div class="fc-cat">Subjective Visual Vertical</div></div>
+        <div class="feature-cell"><div class="fc-name">Balance</div><div class="fc-cat">Sway in cm</div></div>
+      </div>
+    </div>
+
+    <div class="card" style="border-left: 3px solid var(--amber);">
+      <h3 style="color:var(--amber);">Assessment</h3>
+      <div class="feature-grid" style="grid-template-columns: repeat(2, 1fr);">
+        <div class="feature-cell"><div class="fc-name">Balance</div></div>
+        <div class="feature-cell"><div class="fc-name">Reaction Time</div></div>
+        <div class="feature-cell"><div class="fc-name">SVV</div></div>
+        <div class="feature-cell"><div class="fc-name">Rivermead Scale</div></div>
+        <div class="feature-cell"><div class="fc-name">Visual Analogue</div></div>
+        <div class="feature-cell"><div class="fc-name">Pro Tracking</div></div>
+      </div>
+    </div>
+  </div>
+
+  <h3>Platform &amp; Pricing</h3>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Detail</th><th>Value</th></tr>
+      <tr><td>Platforms</td><td>iOS (14+) &amp; Android</td></tr>
+      <tr><td>US App Store</td><td style="font-family:'JetBrains Mono',monospace;color:var(--text-0);">$17.99 USD one-time</td></tr>
+      <tr><td>CA App Store</td><td style="font-family:'JetBrains Mono',monospace;color:var(--text-0);">$14.99 CAD one-time + IAP</td></tr>
+      <tr><td>Pro subscription</td><td style="font-family:'JetBrains Mono',monospace;color:var(--text-0);">$4.99/mo or $29.99/yr</td></tr>
+      <tr><td>Data collection</td><td><span class="tag tag-v">V</span> "Data Not Collected" (both platforms)</td></tr>
+      <tr><td>Latest version</td><td>iOS 2.3.3 (Jul 29, 2026) &middot; Android (Jul 11, 2026)</td></tr>
+      <tr><td>Family Sharing</td><td>Yes, up to 6 members</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ============ 4. VALUE PROP ============ -->
+<section id="value">
+  <div class="section-label">04 / Value Proposition</div>
+  <h2>Stakeholder Map</h2>
+
+  <div class="stake-flow">
+    <div class="stake-node">
+      <div class="stake-role">Prescriber</div>
+      <div class="stake-who">Clinician</div>
+      <div style="font-size:11px;color:var(--text-3);margin-top:4px;">Physio, Chiro, Functional Neuro</div>
+    </div>
+    <div class="stake-arrow">&rarr;</div>
+    <div class="stake-node" style="border-color:var(--amber);background:var(--amber-dim);">
+      <div class="stake-role">Recommends</div>
+      <div class="stake-who">App Purchase</div>
+      <div style="font-size:11px;color:var(--text-3);margin-top:4px;">$15-18 one-time</div>
+    </div>
+    <div class="stake-arrow">&rarr;</div>
+    <div class="stake-node primary">
+      <div class="stake-role">End User + Buyer</div>
+      <div class="stake-who">Patient</div>
+      <div style="font-size:11px;color:var(--text-3);margin-top:4px;">Exercises at home</div>
+    </div>
+    <div class="stake-arrow">&rarr;</div>
+    <div class="stake-node">
+      <div class="stake-role">Optional</div>
+      <div class="stake-who">Pro Upgrade</div>
+      <div style="font-size:11px;color:var(--text-3);margin-top:4px;">$4.99/mo tracking</div>
+    </div>
+  </div>
+
+  <div class="card-grid" style="margin-top:32px;">
+    <div class="card">
+      <h3>Patient Value</h3>
+      <div class="card-body">Affordable, self-paced oculomotor and cognitive exercises on their own phone. Adjustable difficulty. Sport-themed targets. <span class="tag tag-v">V</span></div>
+    </div>
+    <div class="card">
+      <h3>Clinician Value</h3>
+      <div class="card-body">All-in-one exercise library replacing printouts/videos. Assessments shareable via email. Affordable for patients to buy themselves. <span class="tag tag-v">V</span></div>
+    </div>
+    <div class="card">
+      <h3>Sports Org Value</h3>
+      <div class="card-body">Sport-themed targets, athlete testimonial (pro goaltender). 1 team in 1 year is target. No current partnerships found. <span class="tag tag-a">A</span></div>
+    </div>
+    <div class="card">
+      <h3>Payer/Insurer</h3>
+      <div class="card-body">No evidence of payer engagement, reimbursement coding, or insurance coverage found. <span class="tag tag-nf">NF</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 5. USERS ============ -->
+<section id="users">
+  <div class="section-label">05 / Users &amp; Buyers</div>
+  <h2>B2B2C: Clinicians Recommend, Patients Buy</h2>
+
+  <div class="two-col" style="margin-bottom:32px;">
+    <div>
+      <h3>App Store Review Analysis</h3>
+      <p style="font-size:13px;color:var(--text-2);margin-bottom:16px;">8 written reviews total (well under 50 targeted)</p>
+      <div class="bar-chart">
+        <div class="bar-row">
+          <div class="bar-label">Clinician reviewers</div>
+          <div class="bar-track"><div class="bar-fill cyan" style="width:37.5%;"></div></div>
+          <div class="bar-val">3/8</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Patient/self-user</div>
+          <div class="bar-track"><div class="bar-fill green" style="width:12.5%;"></div></div>
+          <div class="bar-val">1/8</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Caregiver</div>
+          <div class="bar-track"><div class="bar-fill purple" style="width:12.5%;"></div></div>
+          <div class="bar-val">1/8</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Unclear</div>
+          <div class="bar-track"><div class="bar-fill amber" style="width:37.5%;"></div></div>
+          <div class="bar-val">3/8</div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <h3>Top Praised Features</h3>
+      <div class="bar-chart">
+        <div class="bar-row">
+          <div class="bar-label">Breadth / "all in one"</div>
+          <div class="bar-track"><div class="bar-fill cyan" style="width:100%;"></div></div>
+          <div class="bar-val">3x</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Customizability</div>
+          <div class="bar-track"><div class="bar-fill cyan" style="width:66%;"></div></div>
+          <div class="bar-val">2x</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Eye-movement/OKN tools</div>
+          <div class="bar-track"><div class="bar-fill cyan" style="width:66%;"></div></div>
+          <div class="bar-val">2x</div>
+        </div>
+      </div>
+
+      <h3 style="margin-top:24px;">Segments (Founder Deck)</h3>
+      <div style="font-size:13px;">
+        <div style="padding:8px 0;border-bottom:1px solid var(--border);"><span style="color:var(--cyan);font-weight:600;">Beachhead:</span> <span style="color:var(--text-1);">Concussion/vestibular clinicians. 3K+ users.</span></div>
+        <div style="padding:8px 0;border-bottom:1px solid var(--border);"><span style="color:var(--amber);font-weight:600;">Expansion:</span> <span style="color:var(--text-1);">Sports orgs, school teams. Goal: 1st team in 1yr.</span></div>
+        <div style="padding:8px 0;"><span style="color:var(--purple);font-weight:600;">Long-term:</span> <span style="color:var(--text-1);">Research institutions, global partnerships.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 6. DISTRIBUTION ============ -->
+<section id="distribution">
+  <div class="section-label">06 / Distribution</div>
+  <h2>Channel Strength</h2>
+
+  <div class="bar-chart" style="max-width:800px;">
+    <div class="bar-row">
+      <div class="bar-label">Clinician word of mouth</div>
+      <div class="bar-track"><div class="bar-fill green" style="width:90%;"></div></div>
+      <div class="bar-val">Strong</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">CE courses (REACH)</div>
+      <div class="bar-track"><div class="bar-fill green" style="width:85%;"></div></div>
+      <div class="bar-val">Strong</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">App stores (iOS + Android)</div>
+      <div class="bar-track"><div class="bar-fill cyan" style="width:60%;"></div></div>
+      <div class="bar-val">Moderate</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">KOL / func. neuro network</div>
+      <div class="bar-track"><div class="bar-fill cyan" style="width:55%;"></div></div>
+      <div class="bar-val">Moderate</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Podcasts &amp; interviews</div>
+      <div class="bar-track"><div class="bar-fill cyan" style="width:50%;"></div></div>
+      <div class="bar-val">Moderate</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Conferences (ACRM, etc.)</div>
+      <div class="bar-track"><div class="bar-fill cyan" style="width:50%;"></div></div>
+      <div class="bar-val">Moderate</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Social media (853 IG)</div>
+      <div class="bar-track"><div class="bar-fill amber" style="width:20%;"></div></div>
+      <div class="bar-val">Weak</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Sports org partnerships</div>
+      <div class="bar-track"><div class="bar-fill red" style="width:10%;"></div></div>
+      <div class="bar-val">Weak</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">SEO / content marketing</div>
+      <div class="bar-track"><div class="bar-fill red" style="width:5%;"></div></div>
+      <div class="bar-val">Weak</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Association endorsements</div>
+      <div class="bar-track"><div class="bar-fill red" style="width:5%;"></div></div>
+      <div class="bar-val">Weak</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 7. COMPETITION ============ -->
+<section id="competition">
+  <div class="section-label">07 / Competitive Landscape</div>
+  <h2>Positioning Map</h2>
+
+  <div class="pos-map">
+    <div class="pos-axis-x"></div>
+    <div class="pos-axis-y"></div>
+    <div class="pos-label" style="top:12%;left:50%;transform:translateX(-50%);">TREATMENT / TRAINING</div>
+    <div class="pos-label" style="bottom:8%;left:50%;transform:translateX(-50%);">ASSESSMENT ONLY</div>
+    <div class="pos-label" style="left:12%;top:50%;transform:translateY(-50%) rotate(-90deg);">CLINICIAN-LED</div>
+    <div class="pos-label" style="right:8%;top:50%;transform:translateY(-50%) rotate(90deg);">CONSUMER-LED</div>
+
+    <!-- BTK -->
+    <div class="pos-dot" style="left:35%;top:18%;">
+      <div class="pos-dot-circle" style="border-color:var(--cyan);background:var(--cyan);width:18px;height:18px;box-shadow:0 0 12px var(--cyan);"></div>
+      <div class="pos-dot-label" style="color:var(--cyan);font-weight:700;">Brain Tool Kit</div>
+    </div>
+
+    <!-- Focus Builder Pro -->
+    <div class="pos-dot" style="left:30%;top:25%;">
+      <div class="pos-dot-circle" style="border-color:var(--green);"></div>
+      <div class="pos-dot-label">Focus Builder Pro</div>
+    </div>
+
+    <!-- NeuronUP -->
+    <div class="pos-dot" style="left:32%;top:32%;">
+      <div class="pos-dot-circle" style="border-color:var(--purple);"></div>
+      <div class="pos-dot-label">NeuronUP</div>
+    </div>
+
+    <!-- Constant Therapy -->
+    <div class="pos-dot" style="left:40%;top:35%;">
+      <div class="pos-dot-circle" style="border-color:var(--purple);"></div>
+      <div class="pos-dot-label">Constant Therapy</div>
+    </div>
+
+    <!-- Concussion Tracker -->
+    <div class="pos-dot" style="left:35%;top:48%;">
+      <div class="pos-dot-circle" style="border-color:var(--text-3);"></div>
+      <div class="pos-dot-label">Concussion Tracker</div>
+    </div>
+
+    <!-- ImPACT -->
+    <div class="pos-dot" style="left:28%;top:72%;">
+      <div class="pos-dot-circle" style="border-color:var(--amber);"></div>
+      <div class="pos-dot-label">ImPACT</div>
+    </div>
+
+    <!-- Sway -->
+    <div class="pos-dot" style="left:34%;top:78%;">
+      <div class="pos-dot-circle" style="border-color:var(--amber);"></div>
+      <div class="pos-dot-label">Sway</div>
+    </div>
+
+    <!-- King-Devick -->
+    <div class="pos-dot" style="left:40%;top:82%;">
+      <div class="pos-dot-circle" style="border-color:var(--amber);"></div>
+      <div class="pos-dot-label">King-Devick</div>
+    </div>
+
+    <!-- EQ/BrainEQ -->
+    <div class="pos-dot" style="left:42%;top:68%;">
+      <div class="pos-dot-circle" style="border-color:var(--amber);"></div>
+      <div class="pos-dot-label">EQ/BrainEQ</div>
+    </div>
+
+    <!-- NeuroTracker -->
+    <div class="pos-dot" style="left:65%;top:28%;">
+      <div class="pos-dot-circle" style="border-color:var(--pink);"></div>
+      <div class="pos-dot-label">NeuroTrackerX</div>
+    </div>
+
+    <!-- ProSight -->
+    <div class="pos-dot" style="left:72%;top:24%;">
+      <div class="pos-dot-circle" style="border-color:var(--pink);"></div>
+      <div class="pos-dot-label">ProSight</div>
+    </div>
+
+    <!-- Vision Workout -->
+    <div class="pos-dot" style="left:78%;top:30%;">
+      <div class="pos-dot-circle" style="border-color:var(--text-3);"></div>
+      <div class="pos-dot-label">Vision Workout</div>
+    </div>
+
+    <!-- BrainHQ -->
+    <div class="pos-dot" style="left:72%;top:38%;">
+      <div class="pos-dot-circle" style="border-color:var(--pink);"></div>
+      <div class="pos-dot-label">BrainHQ</div>
+    </div>
+
+    <!-- Lumosity -->
+    <div class="pos-dot" style="left:80%;top:42%;">
+      <div class="pos-dot-circle" style="border-color:var(--pink);"></div>
+      <div class="pos-dot-label">Lumosity</div>
+    </div>
+  </div>
+
+  <h3 style="margin-top:40px;">Competitor Comparison</h3>
+  <div class="table-wrap" style="margin-bottom:32px;">
+    <table>
+      <tr>
+        <th>Company</th>
+        <th>Category</th>
+        <th>Pricing</th>
+        <th>Regulatory</th>
+        <th>Funding</th>
+        <th>Overlap</th>
+      </tr>
+      <tr>
+        <td style="color:var(--green);font-weight:600;">Focus Builder Pro</td>
+        <td>Direct: eye-movement rehab</td>
+        <td style="font-family:'JetBrains Mono',monospace;">$69.99/yr provider</td>
+        <td><span class="tag tag-nf">None</span></td>
+        <td>None found</td>
+        <td><span style="color:var(--red);font-weight:700;">Highest</span></td>
+      </tr>
+      <tr>
+        <td>ProSight</td>
+        <td>Sports vision training</td>
+        <td style="font-family:'JetBrains Mono',monospace;">$89.99/yr</td>
+        <td><span class="tag tag-nf">None</span></td>
+        <td>Private</td>
+        <td>Low-Mod</td>
+      </tr>
+      <tr>
+        <td>NeuroTrackerX</td>
+        <td>Perceptual-cognitive</td>
+        <td style="font-family:'JetBrains Mono',monospace;">$30/mo</td>
+        <td><span class="tag tag-nf">None</span></td>
+        <td>$550K grant</td>
+        <td>Moderate</td>
+      </tr>
+      <tr>
+        <td>EQ / BrainEQ</td>
+        <td>Concussion assessment</td>
+        <td>Free + sub</td>
+        <td><span class="tag tag-v">FDA 510(k)</span></td>
+        <td>$2M seed</td>
+        <td>Moderate</td>
+      </tr>
+      <tr>
+        <td>ImPACT</td>
+        <td>Clinical assessment</td>
+        <td>Org licences</td>
+        <td><span class="tag tag-v">FDA De Novo 2016</span></td>
+        <td>Acquired (Alpine)</td>
+        <td>Assessment only</td>
+      </tr>
+      <tr>
+        <td>Sway Medical</td>
+        <td>Clinical assessment</td>
+        <td style="font-family:'JetBrains Mono',monospace;">$199/yr</td>
+        <td><span class="tag tag-v">FDA 510(k)</span></td>
+        <td>$750K angel</td>
+        <td>Assessment only</td>
+      </tr>
+      <tr>
+        <td>King-Devick</td>
+        <td>Sideline assessment</td>
+        <td>N/A</td>
+        <td><span class="tag tag-v">FDA 510(k)</span></td>
+        <td>Mayo licence</td>
+        <td>Assessment only</td>
+      </tr>
+      <tr>
+        <td>Constant Therapy</td>
+        <td>Neuro-rehab (stroke/TBI)</td>
+        <td style="font-family:'JetBrains Mono',monospace;">$25/mo</td>
+        <td><span class="tag tag-v">FDA Breakthrough</span></td>
+        <td>Acquired 2017</td>
+        <td>Cognitive only</td>
+      </tr>
+      <tr>
+        <td>BrainHQ</td>
+        <td>Consumer cognitive</td>
+        <td style="font-family:'JetBrains Mono',monospace;">$14/mo</td>
+        <td><span class="tag tag-nf">None</span></td>
+        <td>N/A</td>
+        <td>Cognitive only</td>
+      </tr>
+      <tr>
+        <td>Lumosity</td>
+        <td>Consumer brain training</td>
+        <td style="font-family:'JetBrains Mono',monospace;">$11.99/mo</td>
+        <td><span class="tag tag-v">FDA 510(k) Rx</span></td>
+        <td>N/A</td>
+        <td>Cognitive only</td>
+      </tr>
+    </table>
+  </div>
+
+  <h3>Acquisition Timeline</h3>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-year">2016</div>
+      <div class="tl-title">Hachette Livre acquires Peak (majority stake)</div>
+      <div class="tl-desc">Consumer brain training. Price undisclosed.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot" style="background:var(--green);"></div>
+      <div class="tl-year">2017</div>
+      <div class="tl-title">The Learning Corp acquires Constant Therapy</div>
+      <div class="tl-desc">Digital neuro-rehab (stroke/TBI). Price undisclosed.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot" style="background:var(--amber);"></div>
+      <div class="tl-year">2019</div>
+      <div class="tl-title">EQ Balance gets FDA 510(k) K190261</div>
+      <div class="tl-desc">Highmark Interactive, balance module only.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot" style="background:var(--purple);"></div>
+      <div class="tl-year">2020</div>
+      <div class="tl-title">Alpine Investors acquires ImPACT</div>
+      <div class="tl-desc">Via Riverside Insights. First FDA-cleared concussion device.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-year">2021</div>
+      <div class="tl-title">PopReach acquires Peak assets ($5M)</div>
+      <div class="tl-desc">$3M at closing. Consumer brain training.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-year">2021</div>
+      <div class="tl-title">Highmark acquires BrainFx (CAD 3.9M)</div>
+      <div class="tl-desc">Consolidation in concussion assessment.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot" style="background:var(--red);"></div>
+      <div class="tl-year">2025</div>
+      <div class="tl-title">BEQ Science acquires Highmark Interactive</div>
+      <div class="tl-desc">Android app pulled Oct 2025. Price undisclosed.</div>
+    </div>
+  </div>
+
+  <h3 style="margin-top:40px;">Defensibility Assessment</h3>
+  <div class="bar-chart" style="max-width:700px;">
+    <div class="bar-row">
+      <div class="bar-label">Clinical credibility</div>
+      <div class="bar-track"><div class="bar-fill green" style="width:75%;"></div></div>
+      <div class="bar-val">Mod-Strong</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Content library breadth</div>
+      <div class="bar-track"><div class="bar-fill green" style="width:85%;"></div></div>
+      <div class="bar-val">Strong</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Clinician network</div>
+      <div class="bar-track"><div class="bar-fill cyan" style="width:55%;"></div></div>
+      <div class="bar-val">Moderate</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Data / tracking</div>
+      <div class="bar-track"><div class="bar-fill amber" style="width:35%;"></div></div>
+      <div class="bar-val">Weak-Mod</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Switching costs</div>
+      <div class="bar-track"><div class="bar-fill red" style="width:20%;"></div></div>
+      <div class="bar-val">Weak</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Regulatory moat</div>
+      <div class="bar-track"><div class="bar-fill red" style="width:15%;"></div></div>
+      <div class="bar-val">Weak</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 8. MARKET ============ -->
+<section id="market">
+  <div class="section-label">08 / Market Sizing</div>
+  <h2>TAM / SAM / SOM (US + Canada, Annual)</h2>
+
+  <div class="tam-viz">
+    <svg viewBox="0 0 500 500" width="400" height="400" xmlns="http://www.w3.org/2000/svg">
+      <!-- TAM -->
+      <circle cx="250" cy="250" r="200" fill="none" stroke="var(--cyan)" stroke-width="2" opacity="0.3"/>
+      <circle cx="250" cy="250" r="200" fill="var(--cyan)" opacity="0.04"/>
+      <text x="250" y="80" text-anchor="middle" fill="#00d4ff" font-family="JetBrains Mono, monospace" font-size="18" font-weight="700">$111M</text>
+      <text x="250" y="98" text-anchor="middle" fill="#7a84a0" font-family="Inter, sans-serif" font-size="11">TAM (Patient + Clinician)</text>
+
+      <!-- SAM -->
+      <circle cx="250" cy="280" r="120" fill="none" stroke="var(--cyan)" stroke-width="2" opacity="0.5"/>
+      <circle cx="250" cy="280" r="120" fill="var(--cyan)" opacity="0.06"/>
+      <text x="250" y="210" text-anchor="middle" fill="#00d4ff" font-family="JetBrains Mono, monospace" font-size="16" font-weight="700">$22M</text>
+      <text x="250" y="226" text-anchor="middle" fill="#7a84a0" font-family="Inter, sans-serif" font-size="11">SAM (Specialty Rehab Patients)</text>
+
+      <!-- SOM -->
+      <circle cx="250" cy="310" r="45" fill="none" stroke="var(--cyan)" stroke-width="2" opacity="0.8"/>
+      <circle cx="250" cy="310" r="45" fill="var(--cyan)" opacity="0.12"/>
+      <text x="250" y="305" text-anchor="middle" fill="#00d4ff" font-family="JetBrains Mono, monospace" font-size="14" font-weight="700">$480K</text>
+      <text x="250" y="322" text-anchor="middle" fill="#7a84a0" font-family="Inter, sans-serif" font-size="10">SOM (3-yr capture)</text>
+    </svg>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <h3>Patient Side (Primary)</h3>
+      <div class="card-body">
+        <div style="margin-bottom:8px;"><strong style="color:var(--text-0);">TAM $110M:</strong> 2.3M concussion patients/yr (US+CA) at $48 first-year value</div>
+        <div style="margin-bottom:8px;"><strong style="color:var(--text-0);">SAM $22M:</strong> ~20% enter specialty rehab = 460K at $48</div>
+        <div><strong style="color:var(--text-0);">SOM $480K:</strong> 10K users by Y3 at ~$48 blended</div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Clinician Side (No Product Yet)</h3>
+      <div class="card-body">
+        <div style="margin-bottom:8px;"><strong style="color:var(--text-0);">TAM $1.4M:</strong> ~20K specialists at $70/yr (Focus Builder Pro benchmark)</div>
+        <div style="margin-bottom:8px;"><strong style="color:var(--text-0);">SAM $420K:</strong> 30% adoption = 6K clinicians at $70/yr</div>
+        <div><strong style="color:var(--text-0);">SOM $14K:</strong> 200 clinicians by Y3 at $70/yr (if launched)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px;border-color:var(--amber);max-width:800px;">
+    <h3 style="color:var(--amber);">Key Assumptions</h3>
+    <div class="card-body">
+      US concussion data is from 2014 (most recent). 20% specialty rehab referral rate and 30% clinician adoption are assumptions. Revenue assumes full-price purchase + Pro share. Patient-side TAM ($110M) vs clinician TAM ($1.4M) gap is 80x because no clinician product exists to price.
+    </div>
+  </div>
+</section>
+
+<!-- ============ 9. REGULATORY ============ -->
+<section id="regulatory">
+  <div class="section-label">09 / Regulatory Landscape</div>
+  <h2>SaMD Classification Risk</h2>
+
+  <div class="card-grid">
+    <div class="card" style="border-left:3px solid var(--amber);">
+      <h3>Current Positioning</h3>
+      <div class="card-body">
+        App Store: "No diagnostic information is provided"<br>
+        Website disclaims medical advice<br>
+        <strong style="color:var(--amber);">But:</strong> listing names "Concussion recovery programs," "Vestibular rehabilitation," and SVV "can help detect abnormal tilt"
+      </div>
+    </div>
+    <div class="card" style="border-left:3px solid var(--red);">
+      <h3>Regulatory Status</h3>
+      <div class="card-body">
+        <strong>Health Canada MDALL:</strong> <span class="tag tag-nf">Not found</span><br>
+        <strong>FDA 510(k)/De Novo:</strong> <span class="tag tag-nf">Not found</span><br>
+        <strong>Focus Builder Pro (closest competitor):</strong> Also no clearance <span class="tag tag-v">V</span>
+      </div>
+    </div>
+    <div class="card" style="border-left:3px solid var(--cyan);">
+      <h3>Competitors with Clearances</h3>
+      <div class="card-body">
+        All are <strong>assessment</strong> tools, not treatment:<br>
+        ImPACT (FDA De Novo 2016)<br>
+        Sway (FDA 510(k) 2013, 2025)<br>
+        King-Devick (FDA 510(k) 2018)<br>
+        Lumosity (FDA 510(k) 2025, ADHD Rx)
+      </div>
+    </div>
+    <div class="card" style="border-left:3px solid var(--purple);">
+      <h3>Grey Zone</h3>
+      <div class="card-body">
+        Under both Health Canada and FDA, <strong>intended use and claims language</strong> determine classification. The more specific the clinical claims ("detect abnormal tilt"), the closer to SaMD. Current language sits in a grey area. <span class="tag tag-i">I</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 10. HYPOTHESES ============ -->
+<section id="hypotheses">
+  <div class="section-label">10 / Hypotheses to Validate</div>
+  <h2>8 Hypotheses</h2>
+
+  <div class="hyp-card">
+    <div class="hyp-header">
+      <div class="hyp-num">H1</div>
+      <div class="hyp-title">The beachhead is functional neurology, not mainstream PT/OT</div>
+      <span class="tag tag-i">I</span>
+    </div>
+    <div class="evidence-row">
+      <div class="ev-for"><div class="ev-label">Evidence For</div><div class="ev-text">5/6 testimonials are chiro/functional neuro; Carrick Institute is the CE channel; Focus Builder Pro targets the same niche</div></div>
+      <div class="ev-against"><div class="ev-label">Evidence Against</div><div class="ev-text">PhD from mainstream rehab (U of T); ACRM is mainstream; deck lists physio and athletic therapists</div></div>
+    </div>
+  </div>
+
+  <div class="hyp-card">
+    <div class="hyp-header">
+      <div class="hyp-num">H2</div>
+      <div class="hyp-title">Clinicians are the growth bottleneck, not patients</div>
+      <span class="tag tag-i">I</span>
+    </div>
+    <div class="evidence-row">
+      <div class="ev-for"><div class="ev-label">Evidence For</div><div class="ev-text">B2B2C depends on clinician recommendation; no consumer marketing or SEO; 3K units across 6 years is slow for consumer</div></div>
+      <div class="ev-against"><div class="ev-label">Evidence Against</div><div class="ev-text">Free mini course creates direct patient funnel</div></div>
+    </div>
+  </div>
+
+  <div class="hyp-card">
+    <div class="hyp-header">
+      <div class="hyp-num">H3</div>
+      <div class="hyp-title">"Neuroperformance" positioning is aspirational, not current</div>
+      <span class="tag tag-i">I</span>
+    </div>
+    <div class="evidence-row">
+      <div class="ev-for"><div class="ev-label">Evidence For</div><div class="ev-text">No sports org partnerships; only 1 athlete testimonial; sport targets are recent feature</div></div>
+      <div class="ev-against"><div class="ev-label">Evidence Against</div><div class="ev-text">Deck frames sports orgs as expansion with 1-year target</div></div>
+    </div>
+  </div>
+
+  <div class="hyp-card">
+    <div class="hyp-header">
+      <div class="hyp-num">H4</div>
+      <div class="hyp-title">Revenue is predominantly one-time purchases, not subscriptions</div>
+      <span class="tag tag-i">I</span>
+    </div>
+    <div class="evidence-row">
+      <div class="ev-for"><div class="ev-label">Evidence For</div><div class="ev-text">$15-18 one-time predates Pro; Pro pricing only on CA listing; no subscription-first messaging</div></div>
+      <div class="ev-against"><div class="ev-label">Evidence Against</div><div class="ev-text">Pro exists and adds recurring revenue</div></div>
+    </div>
+  </div>
+
+  <div class="hyp-card">
+    <div class="hyp-header">
+      <div class="hyp-num">H5</div>
+      <div class="hyp-title">The RCT results would be the single most important growth lever</div>
+      <span class="tag tag-i">I</span>
+    </div>
+    <div class="evidence-row">
+      <div class="ev-for"><div class="ev-label">Evidence For</div><div class="ev-text">No competitor has published validation of their exercise app; ACRM poster is not peer-reviewed publication</div></div>
+      <div class="ev-against"><div class="ev-label">Evidence Against</div><div class="ev-text">Lumosity's published trial didn't prevent FTC false-advertising settlement</div></div>
+    </div>
+  </div>
+
+  <div class="hyp-card">
+    <div class="hyp-header">
+      <div class="hyp-num">H6</div>
+      <div class="hyp-title">Focus Builder Pro is the primary competitive threat</div>
+      <span class="tag tag-i">I</span>
+    </div>
+    <div class="evidence-row">
+      <div class="ev-for"><div class="ev-label">Evidence For</div><div class="ev-text">Same exercises, same clinician-to-patient model, same niche</div></div>
+      <div class="ev-against"><div class="ev-label">Evidence Against</div><div class="ev-text">Very small; iPad-only; no Android; narrower scope (no cognitive/vestibular)</div></div>
+    </div>
+  </div>
+
+  <div class="hyp-card">
+    <div class="hyp-header">
+      <div class="hyp-num">H7</div>
+      <div class="hyp-title">A clinician dashboard would unlock a new revenue stream and switching costs</div>
+      <span class="tag tag-a">A</span>
+    </div>
+    <div class="evidence-row">
+      <div class="ev-for"><div class="ev-label">Evidence For</div><div class="ev-text">Focus Builder Pro charges $70/yr for providers; NeuronUP charges $29-85/mo; BTK has no clinician monetization</div></div>
+      <div class="ev-against"><div class="ev-label">Evidence Against</div><div class="ev-text">No evidence the founder is building this</div></div>
+    </div>
+  </div>
+
+  <div class="hyp-card">
+    <div class="hyp-header">
+      <div class="hyp-num">H8</div>
+      <div class="hyp-title">The 3,000+ units figure includes both platforms and international storefronts</div>
+      <span class="tag tag-i">I</span>
+    </div>
+    <div class="evidence-row">
+      <div class="ev-for"><div class="ev-label">Evidence For</div><div class="ev-text">30+ countries claimed; iOS likely dominant; Android shows only 500+ downloads</div></div>
+      <div class="ev-against"><div class="ev-label">Evidence Against</div><div class="ev-text">mwm.ai claims 19K iOS downloads (unverifiable)</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 11. QUESTIONS ============ -->
+<section id="questions">
+  <div class="section-label">11 / Questions for the Founder</div>
+  <h2>12 Questions, 4 Categories</h2>
+
+  <h3 style="margin-top:24px;color:var(--cyan);">Product &amp; Roadmap</h3>
+  <div class="q-card"><div class="q-num">01</div><div class="q-text">What is the split between one-time download revenue and Pro subscription revenue? What % upgrade to Pro?<div class="q-tag">Maps to: H4 (revenue model)</div></div></div>
+  <div class="q-card"><div class="q-num">02</div><div class="q-text">The RCT (ORCA) is listed as "done." When are results expected to be published, and in which journal?<div class="q-tag">Maps to: H5 (clinical evidence)</div></div></div>
+  <div class="q-card"><div class="q-num">03</div><div class="q-text">Is a clinician dashboard or patient-assignment portal on the roadmap? Timeline and pricing model?<div class="q-tag">Maps to: H7 (switching costs)</div></div></div>
+  <div class="q-card"><div class="q-num">04</div><div class="q-text">Title discrepancy: "Founder, CEO" (deck) vs "Chief Innovation Officer" (website). Is there a CEO or business co-founder you're seeking?<div class="q-tag">Maps to: team gap</div></div></div>
+
+  <h3 style="margin-top:24px;color:var(--green);">Users &amp; Revenue</h3>
+  <div class="q-card"><div class="q-num">05</div><div class="q-text">Of the 3,000+ units, what is the breakdown? Clinician vs. patient? iOS vs. Android? Canada vs. US vs. international?<div class="q-tag">Maps to: H8 (user segments)</div></div></div>
+  <div class="q-card"><div class="q-num">06</div><div class="q-text">Current MRR or ARR? Revenue mix across app sales, Pro subs, course sales, and clinic income?<div class="q-tag">Maps to: business viability</div></div></div>
+  <div class="q-card"><div class="q-num">07</div><div class="q-text">How did you arrive at "2/3 of sales in last 2 years"? Is this units or revenue?<div class="q-tag">Maps to: traction validation</div></div></div>
+
+  <h3 style="margin-top:24px;color:var(--amber);">Distribution</h3>
+  <div class="q-card"><div class="q-num">08</div><div class="q-text">Strongest channel appears to be clinician WOM through functional neurology / Carrick. Intentional? Trying to expand into mainstream PT/OT?<div class="q-tag">Maps to: H1 (beachhead)</div></div></div>
+  <div class="q-card"><div class="q-num">09</div><div class="q-text">What is the conversion rate from the free mini course to paid app downloads?<div class="q-tag">Maps to: distribution effectiveness</div></div></div>
+
+  <h3 style="margin-top:24px;color:var(--purple);">Team, Funding &amp; Regulatory</h3>
+  <div class="q-card"><div class="q-num">10</div><div class="q-text">Solo non-technical founder with contract devs. Plan for engineering capacity as product grows (clinician portal, sports features)?<div class="q-tag">Maps to: team scalability</div></div></div>
+  <div class="q-card"><div class="q-num">11</div><div class="q-text">Raising or planning to raise? What is JumpSTART providing (mentorship, funding, both)?<div class="q-tag">Maps to: funding gap</div></div></div>
+  <div class="q-card"><div class="q-num">12</div><div class="q-text">App Store claims language ("detect abnormal tilt," "concussion recovery") could push toward SaMD. Regulatory strategy assessed? Wellness positioning intentional?<div class="q-tag">Maps to: regulatory risk</div></div></div>
+</section>
+
+<!-- ============ 12. SUMMARY ============ -->
+<section id="summary">
+  <div class="section-label">12 / Summary</div>
+  <h2>Assessment</h2>
+
+  <div class="summary-col">
+    <div class="summary-block established">
+      <h3>Well Established</h3>
+      <div class="card-body" style="color:var(--text-1);">
+        Broadest exercise set of any identified competitor (oculomotor + vestibular + cognitive + assessment). Genuine clinical/research credentials (PhD, systematic review, RCT, ACRM). 10+ years concussion-specific experience. Actively maintained through 2026.
+      </div>
+    </div>
+
+    <div class="summary-block uncertain">
+      <h3>Uncertain</h3>
+      <div class="card-body" style="color:var(--text-1);">
+        Traction figures (3K+ units, 30+ countries) are founder-stated and unverifiable. Revenue composition unknown. Gap between 500+ Play downloads and 3K total plausible but unexplained. Primary user base (functional neurology niche vs. broader rehab) unclear.
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:16px;">
+    <div class="summary-block unknown" style="max-width:100%;">
+      <h3>Three Biggest Unknowns</h3>
+      <div class="card-body" style="color:var(--text-1);">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin-top:8px;">
+          <div>
+            <strong style="color:var(--red);">1. Revenue &amp; Unit Economics</strong><br>
+            Actual ARR, ARPU, and revenue split across app downloads, Pro subscriptions, and courses. Sustainable at current scale?
+          </div>
+          <div>
+            <strong style="color:var(--red);">2. RCT Publication Timeline</strong><br>
+            ORCA trial is the single largest potential unlock for credibility and channel expansion into mainstream rehab medicine.
+          </div>
+          <div>
+            <strong style="color:var(--red);">3. Team &amp; Technical Capacity</strong><br>
+            Contract devs credited by initials, no co-founder or FTE engineering. Plan for clinician portal, sports features, sustained development?
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 13. SOURCES ============ -->
+<section id="sources" style="margin-bottom:32px;">
+  <div class="section-label">13 / Sources</div>
+  <h2>References</h2>
+
+  <div class="sources-grid">
+    <div class="sources-group">
+      <h4>Product &amp; Company</h4>
+      <a href="https://www.braintoolkit.ca/" target="_blank">braintoolkit.ca</a>
+      <a href="https://apps.apple.com/us/app/brain-tool-kit/id1532827079" target="_blank">App Store US</a>
+      <a href="https://apps.apple.com/ca/app/brain-tool-kit/id1532827079" target="_blank">App Store CA</a>
+      <a href="https://play.google.com/store/apps/details?id=ca.rehablab.braintoolkit" target="_blank">Google Play</a>
+      <a href="https://trademark.justia.com/owners/rehab-lab-inc-6181903" target="_blank">Justia Trademarks</a>
+      <a href="https://concussionrehab.ca/" target="_blank">Concussion Rehab clinic</a>
+      <a href="https://education.concussionrehab.ca/" target="_blank">REACH CE courses</a>
+    </div>
+
+    <div class="sources-group">
+      <h4>Research &amp; Credentials</h4>
+      <a href="https://abiresearch.utoronto.ca/lab-members/graduate-students/melissa-biscardi-msc-rn-domp/" target="_blank">U of T ABI Lab profile</a>
+      <a href="https://www.carrickinstitute.com/team/melissa-biscardi" target="_blank">Carrick Institute bio</a>
+      <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Biscardi+M&sort=date" target="_blank">PubMed: Biscardi M</a>
+      <a href="https://clinicaltrials.gov/study/NCT07709936" target="_blank">ClinicalTrials.gov (ORCA)</a>
+      <a href="https://acrm25.eventscribe.net/posterspeakers.asp?pfp=BrowsebySpeaker" target="_blank">ACRM 2025 speakers</a>
+    </div>
+
+    <div class="sources-group">
+      <h4>Competitors</h4>
+      <a href="https://www.neurdsolutions.com/focus-builder-app" target="_blank">Focus Builder Pro</a>
+      <a href="https://www.prosightapp.com/" target="_blank">ProSight</a>
+      <a href="https://www.neurotrackerx.com/" target="_blank">NeuroTrackerX</a>
+      <a href="https://www.impacttest.com/" target="_blank">ImPACT</a>
+      <a href="https://www.swaymedical.com/" target="_blank">Sway Medical</a>
+      <a href="https://kingdevicktest.com/" target="_blank">King-Devick Test</a>
+      <a href="https://constanttherapy.com/" target="_blank">Constant Therapy</a>
+      <a href="https://www.brainhq.com/" target="_blank">BrainHQ</a>
+      <a href="https://www.lumosity.com/" target="_blank">Lumosity</a>
+      <a href="https://www.neuronup.com/" target="_blank">NeuronUP</a>
+    </div>
+
+    <div class="sources-group">
+      <h4>Market &amp; Prevalence</h4>
+      <a href="https://www.cdc.gov/traumaticbraininjury/pdf/TBI-Surveillance-Report-FINAL_508.pdf" target="_blank">CDC TBI Surveillance</a>
+      <a href="https://www150.statcan.gc.ca/n1/pub/82-003-x/2023006/article/00002-eng.htm" target="_blank">Statistics Canada</a>
+      <a href="https://braininjurycanada.ca/en/statistics/" target="_blank">Brain Injury Canada</a>
+      <a href="https://www.cihi.ca/en/physiotherapists" target="_blank">CIHI Physiotherapists</a>
+      <a href="https://www.bls.gov/ooh/healthcare/physical-therapists.htm" target="_blank">BLS Physical Therapists</a>
+    </div>
+
+    <div class="sources-group">
+      <h4>Regulatory</h4>
+      <a href="https://capra.ca/en/blog/software-as-a-medical-device-samd-definition-and-classification-2020-01-27.htm" target="_blank">CAPRA: Health Canada SaMD</a>
+      <a href="https://www.swaymedical.com/articles/sway-medical-inc-announces-fda-510-k-clearance-of-its-comprehensive-concussion-management-system" target="_blank">Sway FDA clearance</a>
+      <a href="https://www.prnewswire.com/news-releases/king-devick-technologies-receives-fda-clearance-for-k-d-balance-app-300630854.html" target="_blank">King-Devick FDA clearance</a>
+    </div>
+
+    <div class="sources-group">
+      <h4>Acquisitions</h4>
+      <a href="https://www.businesswire.com/news/home/20200109005510/en/" target="_blank">Alpine acquires ImPACT</a>
+      <a href="https://techcrunch.com/2016/12/21/brain-training-app-peak-sells-majority-stake-to-french-publisher-hachette/" target="_blank">Hachette acquires Peak</a>
+      <a href="https://newpoint.ca/transactions/highmark-interactive-was-sold-to-beq-science/" target="_blank">BEQ acquires Highmark</a>
+    </div>
+  </div>
+</section>
+
+<div style="text-align:center;padding:32px 0;border-top:1px solid var(--border);font-size:12px;color:var(--text-3);">
+  Prepared for YSpace (JumpSTART) mentorship sessions &middot; Oct 14, 2026 &middot; @JOMO Labs Inc.
+</div>
+
+</main>
+
+</body>
+</html>
